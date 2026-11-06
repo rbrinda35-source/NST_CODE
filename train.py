@@ -93,9 +93,9 @@ def main():
     style_dataset = ImageFolderDataset(args.style_dir, style_transform)
 
     content_dataloader = DataLoader(content_dataset, batch_size=args.batch_size, shuffle=True,
-                                    pin_memory=True, drop_last=True)
+                                    pin_memory=True, drop_last=False)
     style_dataloader = DataLoader(style_dataset, batch_size=args.batch_size, shuffle=True,
-                                  pin_memory=True, drop_last=True)
+                                  pin_memory=True, drop_last=False)
 
     print(f"Content dataset size: {len(content_dataset)}")
     print(f"Style dataset size: {len(style_dataset)}")
@@ -118,12 +118,13 @@ def main():
     mse_loss = torch.nn.MSELoss()
 
     encoder.eval()
-
-    running_loss = 0.0
-    running_content_loss = 0.0
-    running_style_loss = 0.0
-
+    
     for epoch in range(args.epochs):
+
+        running_loss = 0.0
+        running_content_loss = 0.0
+        running_style_loss = 0.0
+        
         progress_bar = tqdm(zip(content_dataloader, style_dataloader),
                             total=min(len(content_dataloader), len(style_dataloader)))
 

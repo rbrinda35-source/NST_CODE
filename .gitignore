@@ -1,0 +1,28 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.env
+
+# Datasets
+content-data/
+style-data/
+
+# Model weights and checkpoints
+*.pth
+*.pt
+*.ckpt
+
+# Training outputs
+experiment/*/optimizer_epoch_*.pth
+experiment/*/decoder_epoch_*.pth
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

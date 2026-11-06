@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
-from PIL import Image
+from PIL import Image, ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 import os
 from torchvision import transforms
 
@@ -16,7 +17,11 @@ class ImageFolderDataset(Dataset):
 
     def __getitem__(self, index):
         img_path = os.path.join(self.root, self.files[index])
-        img = Image.open(img_path).convert("RGB")
+        try:
+            img = Image.open(img_path).convert("RGB")
+        except Exception as e:
+            print(f"Error loading image {img_path}: {e}")
+            return None
 
         if self.transform:
             img = self.transform(img)
